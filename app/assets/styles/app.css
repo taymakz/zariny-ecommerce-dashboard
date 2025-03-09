@@ -1,0 +1,239 @@
+@import "tailwindcss";
+@plugin "@iconify/tailwind4";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-background-patterns";
+
+@variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "Inter";
+  --font-mono: "DM Mono";
+  --font-condesed: "Roboto Condensed";
+  --font-wisper: "Bad Script";
+
+  --breakpoint-*: initial;
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1380px;
+
+  --color-alert: var(--color-yellow-500);
+  --color-alert-lighter: var(--color-yellow-400);
+
+  --color-brand: var(--color-violet-500);
+  --color-brand-lighter: var(--color-violet-400);
+
+  --color-info: var(--color-blue-500);
+  --color-info-lighter: var(--color-blue-400);
+
+  --color-warning: var(--color-red-500);
+  --color-warning-lighter: var(--color-red-400);
+
+  --color-success: var(--color-emerald-500);
+  --color-success-lighter: var(--color-emerald-400);
+
+  --color-background: oklch(18.22% 0 0);
+  --color-foreground: var(--color-neutral-100);
+  --color-foreground-muted: var(--color-neutral-400);
+
+  --color-sc-background: oklch(16.84% 0 0);
+  --color-sc-foreground: var(--color-neutral-100);
+  --color-sc-muted: var(--color-neutral-500);
+
+  --color-card: oklch(22.2% 0.0025 145.48);
+  --color-card-foreground: var(--color-neutral-100);
+  --color-card-muted: var(--color-neutral-400);
+
+  --color-primary: var(--color-violet-700);
+  --color-primary-lighter: var(--color-violet-600);
+  --color-primary-foreground: var(--color-white);
+
+  --color-secondary: oklch(22.53% 0.0037 286.15);
+  --color-secondary-lighter: var(--color-neutral-800);
+  --color-secondary-foreground: var(--color-neutral-300);
+
+  --color-destructive: var(--color-red-900);
+  --color-destructive-lighter: var(--color-red-800);
+  --color-destructive-foreground: var(--color-white);
+
+  --color-popover: var(--color-card);
+  --color-popover-foreground: var(--color-neutral-100);
+  --color-popover-muted: var(--color-neutral-300);
+
+  --color-muted: var(--color-neutral-800);
+  --color-muted-foreground: 240 3.8% 46.1%;
+
+  --color-accent: oklch(16.84% 0 0);
+  --color-accent-foreground: var(--color-neutral-100);
+
+  --color-border: color-mix(in oklab, var(--color-white) 5%, transparent);
+  --color-border-lighter: color-mix(
+    in oklab,
+    var(--color-white) 10%,
+    transparent
+  );
+  --color-ring: color-mix(in oklab, var(--color-white) 15%, transparent);
+
+  --text-clamp: clamp(0.75rem, 5vw, 1.25rem);
+  --text-clamp-lg: clamp(1rem, 5vw, 2rem);
+  --text-clamp-xl: clamp(1.25rem, 5vw, 3rem);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-collapsible-down: collapsible-down 0.2s ease-in-out;
+  --animate-collapsible-up: collapsible-up 0.2s ease-in-out;
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes collapsible-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-collapsible-content-height);
+    }
+  }
+  @keyframes collapsible-up {
+    from {
+      height: var(--radix-collapsible-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes caret-blink {
+    0%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+@utility container {
+  padding-inline: 0.85rem;
+  margin-inline: auto;
+}
+@layer base {
+  :root {
+    --desktop-header-top-height: 64px;
+    --mobile-header-bottom-height: 58px;
+  }
+}
+
+@layer base {
+  
+  * {
+    @apply border-border !ring-0 !outline-none;
+  }
+  body {
+    @apply font-sans bg-background text-foreground flex min-h-screen flex-col;
+  }
+  input {
+    @apply outline-none;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+
+  ::selection {
+    background: #8884;
+  }
+  /* html {
+    scrollbar-color: var(--foreground) transparent;
+  } */
+  ::-webkit-scrollbar {
+    width: 0.34rem;
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  html {
+    scrollbar-color: hsl(215.4 16.3% 46.9% / 0.3);
+  }
+
+  html.dark {
+    scrollbar-color: hsl(215.4 16.3% 56.9% / 0.3);
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 2147483646;
+  }
+
+  .dark::view-transition-old(root) {
+    z-index: 2147483646;
+  }
+
+  .dark::view-transition-new(root) {
+    z-index: 1;
+  }
+
+  /* Input AutoFill Colors */
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px var(--color-neutral-950) inset;
+    -webkit-text-fill-color: white;
+  }
+
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px var(--color-neutral-950) inset;
+    -webkit-text-fill-color: white;
+  }
+
+  /* Input Type Numbers Hide Arrows */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
+@utility link {
+  @apply text-brand-lighter hover:text-brand disabled:text-brand/40 flex cursor-pointer items-center gap-1 rounded-lg duration-200;
+}
+
+@utility content-full-height {
+  @apply h-[calc(100vh-80px)];
+}
+@utility max-content-full-height {
+  @apply max-h-[calc(100vh-80px)];
+}

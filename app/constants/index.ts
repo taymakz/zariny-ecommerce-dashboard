@@ -1,0 +1,5 @@
+export const appTitle = 'Admin panel'
+export const appDescription = 'app description'
+export const appNameFA = 'Admin panel'
+export const appNameEn = 'Admin panel'
+export const appDesktopStartMinWidth = '(min-width: 1024px)'
