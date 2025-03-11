@@ -1,29 +1,17 @@
+import FetchApi from '~/composables/api'
+
 export default defineNuxtRouteMiddleware(async (to) => {
-  if (import.meta.server)
-    return
-  const tokens = getAuthenticateTokens()
-  // if no tokens in localStorage
-  if (!tokens)
+  const email = useCookie('email')
+
+  if (!email.value)
     return navigateTo(`/auth?backUrl=${to.fullPath}`)
   if (!isAuthenticateAccessTokenExpired())
     return
-  const authStore = useAuthenticateStore()
 
-  // If access token is expired, try refreshing it
-  if (isAuthenticateAccessTokenExpired()) {
-    const { tokens: newTokens } = await authStore.RefreshToken()
-    if (!newTokens) {
-      return navigateTo(`/auth?backUrl=${encodeURIComponent(to.fullPath)}`)
-    }
-  }
-
-  // Optional: Retrieve user details if not already loaded
-  if (!authStore.isLogin && !authStore.getLoading) {
-    await authStore.SetUserDetail()
-  }
-
-  // Redirect to login if user is still not logged in after attempting refresh
-  if (!authStore.isLogin) {
+  const result = await FetchApi('refresh/', {
+    method: 'HEAD',
+  })
+  if (!result.ok) {
     return navigateTo(`/auth?backUrl=${encodeURIComponent(to.fullPath)}`)
   }
 })

@@ -64,7 +64,8 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { redirect: '/dashboard', appMiddleware: 'should-be-logged-in' },
-    '/auth': { appMiddleware: 'should-be-logged-out' },
+    '/dashboard': { appMiddleware: 'should-be-logged-in' },
+
   },
   future: {
     compatibilityVersion: 4,
@@ -97,7 +98,7 @@ export default defineNuxtConfig({
       'DM Mono': [400, 500],
       'Roboto Condensed': [400, 500],
       'Bad Script': [400, 500],
-      
+
     },
   },
 })

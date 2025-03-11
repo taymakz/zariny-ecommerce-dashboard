@@ -10,7 +10,7 @@ useHead({
   },
 })
 const authStore = useAuthenticateStore()
-authStore.SetUserDetail()
+await authStore.InitUser()
 </script>
 
 <template>
@@ -18,13 +18,8 @@ authStore.SetUserDetail()
     <NuxtLayout>
       <NuxtLoadingIndicator :size="3" />
       <AnimatePresence :initial="false">
-        <Motion
-          v-if="authStore.getInitLoading"
-          :animate="{ opacity: 1 }"
-          :exit="{ opacity: 0 }"
-          :initial="{ opacity: 0 }"
-          class="bg-background fixed inset-0 z-50 flex items-center justify-center"
-        >
+        <Motion v-if="authStore.getInitLoading" :animate="{ opacity: 1 }" :exit="{ opacity: 0 }"
+          :initial="{ opacity: 0 }" class="bg-background fixed inset-0 z-50 flex items-center justify-center">
           <LucideLoader2 class="text-brand size-10 animate-spin" />
         </Motion>
       </AnimatePresence>
@@ -35,20 +30,15 @@ authStore.SetUserDetail()
     <!-- Toast -->
     <div class="fixed z-60">
       <ClientOnly>
-        <Toaster
-          :theme="(color.value as 'dark') || 'light'"
-          :position="!isDesktop ? 'top-center' : 'bottom-left'"
-          close-button
-          rich-colors
-          :toast-options="{
+        <Toaster :theme="(color.value as 'dark') || 'light'" :position="!isDesktop ? 'top-center' : 'bottom-left'"
+          close-button rich-colors :toast-options="{
             style: {
               padding: '24px 32px',
               fontSize: '14px',
               fontFamily: 'IRANYekan',
             },
             duration: 5000,
-          }"
-        />
+          }" />
       </ClientOnly>
     </div>
   </div>
