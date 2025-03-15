@@ -3,7 +3,7 @@ export interface ApiResponseType<T> {
   status: number
   message: string
   data: T
-  redirect_url?: string
+  errors?: object
 }
 
 export interface ApiFilterResultType<T> {

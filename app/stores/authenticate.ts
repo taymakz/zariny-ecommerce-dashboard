@@ -29,7 +29,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
     else loading.value = !loading.value
   }
 
-  const UpdateUserEmail = (email: string) => {
+  const UpdateUserEmail = (email: string | null) => {
     const email_cookie = useCookie('email')
     email_cookie.value = email
     userEmail.value = email
@@ -43,7 +43,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
     loading.value = true
     const result = await UserLogout()
 
-    if (result.ok) {
+    if (result.success) {
       toast.warning('Loged Out Successfuly')
       const email_cookie = useCookie('email')
       email_cookie.value = null
@@ -66,13 +66,12 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
       if (email_cookie.value) {
         if (isAuthenticateAccessTokenExpired()) {
           try {
-            await FetchApi('refresh/', {
-              method: 'HEAD',
-            })
+            await refreshToken()
             UpdateUserEmail(email_cookie.value)
           }
           catch {
             toast.error('Token Expired, please loggin again')
+            UpdateUserEmail(null)
             await RedirectToLogin()
           }
         }

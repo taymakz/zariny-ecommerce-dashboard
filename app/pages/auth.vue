@@ -34,17 +34,16 @@ async function submit() {
     email: form.email,
     password: form.password,
   })
-  const data = await result.json()
   loading.value = false
 
-  if (result.ok) {
+  if (result.success) {
     toast('Logged in Successfuly')
     form.email = ''
     form.password = ''
-    await authStore.Login(data.email)
+    await authStore.Login(result.data.email)
   }
   else {
-    error.value = data.detail
+    error.value = result.message
   }
 }
 </script>

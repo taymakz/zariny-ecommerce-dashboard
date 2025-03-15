@@ -1,5 +1,3 @@
-import FetchApi from '~/composables/api'
-
 export default defineNuxtRouteMiddleware(async (to) => {
   const email = useCookie('email')
 
@@ -8,10 +6,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (!isAuthenticateAccessTokenExpired())
     return
 
-  const result = await FetchApi('refresh/', {
-    method: 'HEAD',
-  })
-  if (!result.ok) {
+  try {
+    await refreshToken()
+  }
+  catch {
     return navigateTo(`/auth?backUrl=${encodeURIComponent(to.fullPath)}`)
   }
 })

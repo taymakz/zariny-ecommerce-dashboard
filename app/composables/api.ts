@@ -1,3 +1,4 @@
+import type { ApiResponseType } from '~/types/request'
 import { toast } from 'vue-sonner'
 import { useAuthenticateStore } from '~/stores/authenticate'
 import {
@@ -5,38 +6,34 @@ import {
 } from '~/utils/authenticate'
 
 /**
- * FetchApi - A function to handle API requests with default configuration.
+ * FetchApi - A function to handle API requests with default configuration and error handling.
  * @param {string} url - The endpoint URL.
- * @param {any} config - Optional fetch configuration object.
- * @returns {Promise<Response>} - The raw fetch Response object.
+ * @param {any} config - Optional Axios-like configuration object.
+ * @returns {Promise<ApiResponseType<T>>} - The API response wrapped in a generic type.
  */
-export default async function FetchApi(
+export default async function FetchApi<T>(
   url: string,
   config: any = {},
-): Promise<Response> {
-  const runtimeConfig = useRuntimeConfig() // Getting runtime configuration for API base URL
+): Promise<ApiResponseType<T>> {
+  const runtimeConfig = useRuntimeConfig()
 
   // Set default configuration values
-  const fetchConfig = {
-    method: 'GET', // Default request method
-    credentials: 'include', // Include cookies for cross-origin requests
-    headers: {
-      'Content-Type': 'application/json', // Default content type
-    },
-    baseURL: `${runtimeConfig.public.baseApi || 'http://localhost:8000'}/api/`, // Base API URL
-    ...config, // Spread provided config to override defaults
+  config = {
+    method: 'GET',
+    baseURL: `${runtimeConfig.public.baseApi || 'http://localhost:8000'}/api/`,
+    ...config,
+    credentials: 'include',
   }
 
-  // Construct full URL (since fetch doesn't use baseURL directly)
-  const fullUrl = `${fetchConfig.baseURL}${url.startsWith('/') ? url.slice(1) : url}`
-
-  // Remove baseURL from fetchConfig since fetch doesn't use it
-  delete fetchConfig.baseURL
-
-  // Perform API call using native fetch and return the full Response
-  return await fetch(fullUrl, fetchConfig)
+  try {
+    // Attempt API call using $fetch
+    return await $fetch<ApiResponseType<T>>(url, config)
+  }
+  catch (error: any) {
+    // Handle error based on HTTP status or specific error message
+    return handleFetchError<T>(error)
+  }
 }
-
 /**
  * ClientApi - A function to handle authenticated API requests.
  * Ensures the user is logged in and refreshes tokens if necessary.
@@ -56,23 +53,15 @@ export async function ClientApi(
     toast.error('Please log in first') // Show toast notification
     authStore.RedirectToLogin() // Redirect to login page
   }
-
-  /**
-   * refreshToken - Function to refresh the authentication token.
-   * If the refresh request fails, it forces the user to log in again.
-   */
-  async function refreshToken() {
-    const result = await FetchApi('refresh/', { method: 'HEAD' }) // Call API to refresh token
-
-    if (!result.ok) { // If refresh fails, force user to log in again
+  // If access token is expired, refresh it before making API call
+  if (isAuthenticateAccessTokenExpired()) {
+    try {
+      await refreshToken()
+    }
+    catch {
       toast.error('Please log in first') // Show toast notification
       authStore.RedirectToLogin() // Redirect to login page
     }
-  }
-
-  // If access token is expired, refresh it before making API call
-  if (isAuthenticateAccessTokenExpired()) {
-    await refreshToken()
   }
 
   // Set default config and attach access token to headers if available
@@ -92,4 +81,67 @@ export async function ClientApi(
 
   // Perform API call using native fetch
   return await fetch(fullUrl, config)
+}
+
+/**
+ * handleFetchError - Function to handle general API errors.
+ * @param {any} error - Error object from $fetch.
+ * @returns {ApiResponseType<T>} - Error response in the expected format.
+ */
+function handleFetchError<T>(error: any): ApiResponseType<T> {
+  if (error.status === 429) {
+    if (import.meta.client)
+      toast('Please try again in a moment')
+    return {
+      success: false,
+      status: error.response?.status,
+      message: 'Please try again in a moment',
+      data: null,
+    } as ApiResponseType<T>
+  }
+  else if (error.message.includes('<no response> Failed to fetch')) {
+    if (import.meta.client)
+      toast('The server is currently unavailable')
+    return {
+      success: false,
+      status: 503,
+      message: 'The server is currently unavailable',
+      data: null,
+    } as ApiResponseType<T>
+  }
+  else {
+    return {
+      success: false,
+      status: error.response?.status,
+      message: 'An error occurred during the operation',
+      data: null,
+    } as ApiResponseType<T>
+  }
+}
+
+/**
+ * Refresh authentication token using native fetch.
+ * Throws an error if refresh fails.
+ */
+export async function refreshToken(): Promise<void> {
+  const runtimeConfig = useRuntimeConfig()
+  const authStore = useAuthenticateStore()
+
+  const url = `${runtimeConfig.public.baseApi || 'http://localhost:8000'}/api/refresh/`
+
+  try {
+    const response = await fetch(url, {
+      method: 'HEAD',
+      credentials: 'include', // Ensure cookies are sent
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh token')
+    }
+  }
+  catch (error) {
+    toast.error('Session expired. Please log in again.')
+    authStore.RedirectToLogin()
+    throw error // Re-throw to handle it elsewhere if needed
+  }
 }
