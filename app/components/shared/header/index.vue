@@ -6,6 +6,9 @@
       Admin Panel
     </NuxtLink>
     <div class="flex gap-4">
+      <div>
+        <SharedHeaderOnline/>
+      </div>
       <NuxtLink to="https://github.com/zariny/ecommerce" external target="_blank"
         class="flex items-center gap-1 text-xs text-foreground-muted hover:text-foreground duration-200 uppercase font-mono">
         <i class="icon-[lucide--github] size-4" />
