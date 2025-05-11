@@ -21,8 +21,12 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="cn(buttonVariants({ variant, size }), props.class)"
-    :disabled="loading || $props.disabled">
+  <Primitive
+    :as="as"
+    :as-child="asChild"
+    :class="cn(buttonVariants({ variant, size }), props.class)"
+    :disabled="loading || $props.disabled"
+  >
     <slot v-if="!loading || (loading && !hideContentOnLoading)" />
     <LucideLoader2 v-show="loading" class="size-4.5 animate-spin" />
   </Primitive>

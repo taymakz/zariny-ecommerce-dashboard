@@ -88,7 +88,7 @@ async function submit() {
             <p class="text-warning text-sm">
               {{ error }}
             </p>
-            <Button :loading variant="glass-primary" class="w-24" size="sm" :disabled="!meta.valid" @click="submit">
+            <Button :loading variant="primary" class="w-24" size="sm" :disabled="!meta.valid" @click="submit">
               Login
             </Button>
           </div>
@@ -99,7 +99,7 @@ async function submit() {
             <p class="text-foreground-muted text-sm">
               Logged in as <span class="text-brand-lighter">{{ authStore.getUserEmail }}</span>
             </p>
-            <Button :loading="authStore.getLoading" class="w-24" variant="glass-warning" size="sm"
+            <Button :loading="authStore.getLoading" class="w-24" variant="warning" size="sm"
               @click="authStore.Logout()">
               Logout
             </Button>
