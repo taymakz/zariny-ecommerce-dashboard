@@ -80,6 +80,6 @@ defineProps<{
         </defs>
       </g>
     </svg>
-    {{ message || "هیچ موردی یافت نشد" }}
+    {{ message || "Nothing Found" }}
   </div>
 </template>
