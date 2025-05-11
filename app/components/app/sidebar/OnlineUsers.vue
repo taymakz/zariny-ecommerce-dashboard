@@ -83,9 +83,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Badge v-if="authStore.isLogin" :variant="idle ? 'alert' : 'info'"
-    class="min-w-20 duration-300 flex justify-center gap-1.5 relative">
-    <span :class="cn('size-2 rounded-full animate-pulse', idle ? 'bg-alert-lighter' : 'bg-info-lighter')
+  <Badge v-if="authStore.isLogin" :variant="idle ? 'alert' : 'default'"
+    class="min-w-20 duration-300 flex justify-center gap-1.5 relative text-xs py-px px-1">
+    <span :class="cn('size-2 rounded-full animate-pulse', idle ? 'bg-alert-lighter' : 'bg-brand-lighter')
       " />
     Online
     <NumberFlow :value="onlineUsers" />

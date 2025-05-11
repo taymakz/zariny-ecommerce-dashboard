@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ComboboxEmptyProps } from 'radix-vue'
+import type { ComboboxEmptyProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/utils/cn'
-import { ComboboxEmpty } from 'radix-vue'
+import { ComboboxEmpty } from 'reka-ui'
 import { computed } from 'vue'
 
 const props = defineProps<
@@ -17,10 +17,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <ComboboxEmpty
-    v-bind="delegatedProps"
-    :class="cn('py-6 text-center text-sm', props.class)"
-  >
+  <ComboboxEmpty v-bind="delegatedProps" :class="cn('py-6 text-center text-sm', props.class)">
     <slot />
   </ComboboxEmpty>
 </template>

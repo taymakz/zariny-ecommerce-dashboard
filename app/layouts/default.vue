@@ -1,20 +1,13 @@
 <script setup lang="ts">
-import { useStorage } from '@vueuse/core'
-// use to minimize or maximize width Sidebar
-const minimizeSidebar = useStorage('sidebar-mode', false)
 </script>
 
 <template>
-  <div class="flex h-screen flex-col">
-    <SharedHeader />
-    <div class="grow">
-      <div class="flex h-full">
-        <SharedSidebar :minimize-sidebar />
-        <div class="w-full">
-          <slot />
-        </div>
+  <div class="flex h-svh w-full bg-background overflow-hidden">
+    <AppSidebar />
+    <main id="main" class="relative min-h-svh overflow-y-auto h-full bg-sc-background  rounded-s-4xl border-s  w-full grow">
+      <div class="w-full ">
+        <slot />
       </div>
-    </div>
-    <SharedFooter v-model="minimizeSidebar" />
+    </main>
   </div>
 </template>

@@ -4,10 +4,11 @@ import { appDesktopStartMinWidth } from './constants'
 
 const color = useColorMode()
 const isDesktop = useMediaQuery(appDesktopStartMinWidth)
-useHead({
-  bodyAttrs: {
-    class: 'overflow-hidden',
-  },
+
+const { themeClass } = useThemes()
+
+callOnce(() => {
+  document.body.classList.add(themeClass.value)
 })
 const authStore = useAuthenticateStore()
 await authStore.InitUser()
@@ -17,12 +18,7 @@ await authStore.InitUser()
   <div vaul-drawer-wrapper>
     <NuxtLayout>
       <NuxtLoadingIndicator :size="3" />
-      <AnimatePresence :initial="false">
-        <Motion v-if="authStore.getInitLoading" :animate="{ opacity: 1 }" :exit="{ opacity: 0 }"
-          :initial="{ opacity: 0 }" class="bg-background fixed inset-0 z-50 flex items-center justify-center">
-          <LucideLoader2 class="text-brand size-10 animate-spin" />
-        </Motion>
-      </AnimatePresence>
+      <AppLayoutFullLoading :state="authStore.getInitLoading" />
       <div>
         <NuxtPage />
       </div>

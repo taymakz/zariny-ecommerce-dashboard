@@ -1,9 +1,16 @@
+import type { Ref } from 'vue'
 import type { ApiFilterResultType } from '~/types/request'
 
 export function usePaginatedData<T>(
   endpoint: string,
-  filters: Record<string, any>,
-  take = 50,
+  filters: Record<string, any> = {},
+  take = 10,
+  options: {
+    scrollContainer?: Ref<HTMLElement | null> | HTMLElement | null
+    autoLoadOnMount?: boolean
+  } = {
+    autoLoadOnMount: true,
+  },
 ) {
   const dataList = ref<T[]>([])
   const page = ref(1)
@@ -11,6 +18,13 @@ export function usePaginatedData<T>(
   const hasMore = ref(true)
   const entityCount = ref<number | null>(null)
   const resultCount = computed(() => dataList.value.length)
+  const firstInitLoading = ref(options.autoLoadOnMount ?? true)
+  // Handle both Ref and HTMLElement for scrollContainer
+  const scrollContainer = ref<HTMLElement | null>(
+    options.scrollContainer && 'value' in options.scrollContainer
+      ? options.scrollContainer.value
+      : options.scrollContainer ?? null,
+  )
 
   const loadData = async (reset = false) => {
     if (isLoading.value || (!hasMore.value && !reset))
@@ -22,6 +36,7 @@ export function usePaginatedData<T>(
         dataList.value = []
         page.value = 1
         hasMore.value = true
+        firstInitLoading.value = false
       }
 
       const filteredParams: Record<string, string> = Object.fromEntries(
@@ -61,10 +76,10 @@ export function usePaginatedData<T>(
     }
   }
 
-  // Add refresh function
   const refresh = async () => {
-    if (isLoading.value) return
-    
+    if (isLoading.value)
+      return
+
     isLoading.value = true
     try {
       page.value = 1
@@ -83,7 +98,6 @@ export function usePaginatedData<T>(
         `${endpoint}/?${queryParams}`,
       )
 
-      // Replace data instead of pushing
       dataList.value = response.data.data
       entityCount.value = response.data.entity_count
       hasMore.value = response.data.has_next
@@ -97,16 +111,52 @@ export function usePaginatedData<T>(
     }
   }
 
-  watch(() => filters, () => loadData(true), { deep: true })
+  const handleScroll = () => {
+    if (!scrollContainer.value || isLoading.value || !hasMore.value)
+      return
 
-  return { 
-    dataList, 
-    loadData, 
-    refresh, // Expose refresh function
-    isLoading, 
-    hasMore, 
-    resultCount, 
-    entityCount, 
-    page 
+    const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value
+    const isCloseToBottom = scrollTop + clientHeight >= scrollHeight - 500
+
+    if (isCloseToBottom) {
+      loadData()
+    }
+  }
+
+  watch(
+    () => filters,
+    () => loadData(true),
+    { deep: true },
+  )
+
+  onMounted(async () => {
+    if (options.autoLoadOnMount ?? true) {
+      await loadData()
+      firstInitLoading.value = false
+    }
+
+    if (scrollContainer.value) {
+      scrollContainer.value.addEventListener('scroll', handleScroll)
+    }
+  })
+
+  onUnmounted(() => {
+    if (scrollContainer.value) {
+      scrollContainer.value.removeEventListener('scroll', handleScroll)
+    }
+  })
+
+  return {
+    dataList,
+    loadData,
+    refresh,
+    isLoading,
+    hasMore,
+    resultCount,
+    entityCount,
+    page,
+    scrollContainer,
+    firstInitLoading,
+    handleScroll,
   }
 }

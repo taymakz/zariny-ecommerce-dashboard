@@ -23,10 +23,7 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
     head: {
       viewport: 'width=device-width,initial-scale=1',
-      titleTemplate: `%s %separator ${appTitle}`,
-      templateParams: {
-        separator: '|',
-      },
+      titleTemplate: '%s - Ecommerce',
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' },
@@ -52,8 +49,10 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ['~/assets/styles/app.css'],
-
+  css: [
+    '~/assets/styles/theme.css',
+    '~/assets/styles/app.css',
+  ],
   colorMode: {
     classSuffix: '',
   },

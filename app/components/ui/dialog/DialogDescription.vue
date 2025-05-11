@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { DialogDescriptionProps } from 'radix-vue'
+import type { DialogDescriptionProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/utils/cn'
-import { DialogDescription, useForwardProps } from 'radix-vue'
+import { DialogDescription, useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
 
 const props = defineProps<
@@ -19,10 +19,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 </script>
 
 <template>
-  <DialogDescription
-    v-bind="forwardedProps"
-    :class="cn('text-card-muted text-sm', props.class)"
-  >
+  <DialogDescription v-bind="forwardedProps" :class="cn('text-card-muted text-sm', props.class)">
     <slot />
   </DialogDescription>
 </template>

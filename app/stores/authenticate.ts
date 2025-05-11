@@ -37,7 +37,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
 
   const RedirectToLogin = async () => {
     const route = useRoute()
-    return await navigateTo(`/auth?backUrl=${route.fullPath}`)
+    return await navigateTo(`/account?backUrl=${route.fullPath}`)
   }
   const Logout = async () => {
     loading.value = true

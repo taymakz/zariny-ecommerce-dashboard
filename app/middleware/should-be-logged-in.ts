@@ -2,7 +2,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const email = useCookie('email')
 
   if (!email.value)
-    return navigateTo(`/auth?backUrl=${to.fullPath}`)
+    return navigateTo(`/account?backUrl=${to.fullPath}`)
   if (!isAuthenticateAccessTokenExpired())
     return
 
@@ -10,6 +10,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
     await refreshToken()
   }
   catch {
-    return navigateTo(`/auth?backUrl=${encodeURIComponent(to.fullPath)}`)
+    return navigateTo(`/account?backUrl=${encodeURIComponent(to.fullPath)}`)
   }
 })

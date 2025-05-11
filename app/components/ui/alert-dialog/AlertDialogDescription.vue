@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { AlertDialogDescriptionProps } from 'radix-vue'
+import type { AlertDialogDescriptionProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/utils/cn'
-import { AlertDialogDescription } from 'radix-vue'
+import { AlertDialogDescription } from 'reka-ui'
 import { computed } from 'vue'
 
 const props = defineProps<
@@ -17,10 +17,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <AlertDialogDescription
-    v-bind="delegatedProps"
-    :class="cn('text-card-muted text-sm', props.class)"
-  >
+  <AlertDialogDescription v-bind="delegatedProps" :class="cn('text-card-muted text-sm', props.class)">
     <slot />
   </AlertDialogDescription>
 </template>

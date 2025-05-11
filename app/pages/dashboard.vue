@@ -1,8 +1,13 @@
 <script setup lang="ts">
+useHead({
+  title: 'Dashboard',
+})
 </script>
 
 <template>
   <div>
-    hu
+    <AppLayoutPageContent>
+      hi
+    </AppLayoutPageContent>
   </div>
 </template>
