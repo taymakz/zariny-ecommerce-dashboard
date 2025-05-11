@@ -1,5 +1,4 @@
 import type { ApiResponseType } from '~/types/request'
-import FetchApi from '~/composables/api'
 
 export function UserLogin({
   password,
@@ -20,7 +19,7 @@ export function UserLogin({
   })
 }
 export function UserLogout(): Promise<ApiResponseType<null>> {
-  return FetchApi('login/', {
+  return ClientApi('login/', {
     method: 'DELETE',
     credentials: 'include',
   })

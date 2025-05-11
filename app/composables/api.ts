@@ -7,116 +7,154 @@ import {
 
 /**
  * FetchApi - A function to handle API requests with default configuration and error handling.
- * @param {string} url - The endpoint URL.
- * @param {any} config - Optional Axios-like configuration object.
- * @returns {Promise<ApiResponseType<T>>} - The API response wrapped in a generic type.
+ * @param url - The endpoint URL.
+ * @param config - Optional fetch-like configuration object.
+ * @returns - The API response wrapped in a generic type.
  */
-export default async function FetchApi<T>(
+export async function FetchApi<T>(
   url: string,
-  config: any = {},
+  config: RequestInit = {},
 ): Promise<ApiResponseType<T>> {
   const runtimeConfig = useRuntimeConfig()
 
   // Set default configuration values
   config = {
     method: 'GET',
-    baseURL: `${runtimeConfig.public.baseApi || 'http://localhost:8000'}/api/`,
+    credentials: 'include', // Include cookies for authentication
     ...config,
-    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(config.headers || {}), // Merge provided headers
+    },
   }
 
+  // Construct full URL
+  const fullUrl = `${runtimeConfig.public.baseApi || 'http://localhost:8000'}/api/${url.startsWith('/') ? url.slice(1) : url}`
+
   try {
-    // Attempt API call using $fetch
-    return await $fetch<ApiResponseType<T>>(url, config)
+    const response = await fetch(fullUrl, config)
+    const data = await response.json()
+
+    // Validate response structure
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || 'API request failed')
+    }
+
+    return data as ApiResponseType<T>
   }
   catch (error: any) {
-    // Handle error based on HTTP status or specific error message
     return handleFetchError<T>(error)
   }
 }
+
 /**
  * ClientApi - A function to handle authenticated API requests.
  * Ensures the user is logged in and refreshes tokens if necessary.
- * @param {string} url - The endpoint URL.
- * @param {any} config - Optional fetch configuration object.
- * @returns {Promise<Response>} - The raw fetch Response object.
+ * @param url - The endpoint URL.
+ * @param config - Optional fetch configuration object.
+ * @returns - The API response wrapped in a generic type.
  */
-export async function ClientApi(
+export async function ClientApi<T>(
   url: string,
-  config: any = {},
-): Promise<Response> {
+  config: RequestInit = {},
+): Promise<ApiResponseType<T>> {
   const email = useCookie('email') // Retrieve user's email from cookies
-  const authStore = useAuthenticateStore() // Get authentication store for state management
+  const authStore = useAuthenticateStore() // Get authentication store
 
-  // If the user is not logged in, show an error and redirect to login
+  // Check if user is logged in
   if (!email.value) {
-    toast.error('Please log in first') // Show toast notification
-    authStore.RedirectToLogin() // Redirect to login page
+    toast.error('Please log in first')
+    authStore.RedirectToLogin()
+    throw new Error('User not authenticated')
   }
-  // If access token is expired, refresh it before making API call
+
+  // Refresh token if expired
   if (isAuthenticateAccessTokenExpired()) {
     try {
       await refreshToken()
     }
     catch {
-      toast.error('Please log in first') // Show toast notification
-      authStore.RedirectToLogin() // Redirect to login page
+      toast.error('Please log in first')
+      authStore.RedirectToLogin()
+      throw new Error('Token refresh failed')
     }
   }
 
   // Set default config and attach access token to headers if available
+  const accessToken = useCookie('access_token') // Assuming access token is stored in a cookie
   config = {
-    method: 'GET', // Default request method
+    method: 'GET',
     credentials: 'include', // Include cookies for authentication
     headers: {
-      ...(config.headers || {}), // Merge provided headers with existing ones
+      'Content-Type': 'application/json',
+      ...(accessToken.value ? { Authorization: `Bearer ${accessToken.value}` } : {}),
+      ...(config.headers || {}), // Merge provided headers
     },
-    ...config, // Spread provided config to override defaults
+    ...config,
   }
 
-  const runtimeConfig = useRuntimeConfig() // Get runtime config for API base URL
-
-  // Construct full URL (since fetch doesn't use baseURL directly)
+  // Construct full URL
+  const runtimeConfig = useRuntimeConfig()
   const fullUrl = `${runtimeConfig.public.baseApi || 'http://localhost:8000'}/api/${url.startsWith('/') ? url.slice(1) : url}`
 
-  // Perform API call using native fetch
-  return await fetch(fullUrl, config)
+  try {
+    const response = await fetch(fullUrl, config)
+    const data = await response.json()
+
+    // Validate response structure
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || 'API request failed')
+    }
+
+    return data as ApiResponseType<T>
+  }
+  catch (error: any) {
+    return handleFetchError<T>(error)
+  }
 }
 
 /**
  * handleFetchError - Function to handle general API errors.
- * @param {any} error - Error object from $fetch.
- * @returns {ApiResponseType<T>} - Error response in the expected format.
+ * @param error - Error object from fetch.
+ * @returns - Error response in the expected format.
  */
 function handleFetchError<T>(error: any): ApiResponseType<T> {
-  if (error.status === 429) {
+  let status = 500
+  let message = 'An error occurred during the operation'
+
+  if (error.response?.status) {
+    status = error.response.status
+    if (status === 429) {
+      message = 'Please try again in a moment'
+      if (import.meta.client)
+        toast(message)
+    }
+    else if (status === 401) {
+      message = 'Unauthorized access'
+      if (import.meta.client)
+        toast('Please log in again')
+      useAuthenticateStore().RedirectToLogin()
+    }
+    else if (status === 503) {
+      message = 'The server is currently unavailable'
+      if (import.meta.client)
+        toast(message)
+    }
+  }
+  else if (error.message.includes('Failed to fetch')) {
+    status = 503
+    message = 'The server is currently unavailable'
     if (import.meta.client)
-      toast('Please try again in a moment')
-    return {
-      success: false,
-      status: error.response?.status,
-      message: 'Please try again in a moment',
-      data: null,
-    } as ApiResponseType<T>
+      toast(message)
   }
-  else if (error.message.includes('<no response> Failed to fetch')) {
-    if (import.meta.client)
-      toast('The server is currently unavailable')
-    return {
-      success: false,
-      status: 503,
-      message: 'The server is currently unavailable',
-      data: null,
-    } as ApiResponseType<T>
-  }
-  else {
-    return {
-      success: false,
-      status: error.response?.status,
-      message: 'An error occurred during the operation',
-      data: null,
-    } as ApiResponseType<T>
-  }
+
+  return {
+    success: false,
+    status,
+    message,
+    data: null,
+    errors: error.response?.data?.errors || null,
+  } as ApiResponseType<T>
 }
 
 /**

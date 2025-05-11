@@ -15,6 +15,11 @@ const links: LinkType[] = [
     icon: 'icon-[mage--dashboard-chart]',
     label: 'Dashboard',
   },
+  {
+    to: '/users',
+    icon: 'icon-[mynaui--users-group]',
+    label: 'Users',
+  },
 ]
 </script>
 

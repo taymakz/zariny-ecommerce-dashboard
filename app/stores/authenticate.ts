@@ -1,8 +1,6 @@
 import type { AuthenticateTokensType } from '~/types/authenticate'
-import type { UserAdminType } from '~/types/user'
 import { defineStore } from 'pinia'
 import { toast } from 'vue-sonner'
-import FetchApi from '~/composables/api'
 import { UserLogout } from '~/services/user'
 import {
   isAuthenticateAccessTokenExpired,
