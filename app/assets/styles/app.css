@@ -46,12 +46,15 @@
   --popover-muted: var(--color-neutral-500);
 
   --muted: var(--color-neutral-500);
-  --muted-foreground: var(--color-neutral-950) --accent: var(--color-white);
+  --muted-foreground: var(--color-neutral-950);
+
+  --accent: var(--color-white);
   --accent-foreground: var(--color-neutral-700);
 
   --border: color-mix(in oklab, var(--color-black) 15%, transparent);
   --border-lighter: color-mix(in oklab, var(--color-black) 20%, transparent);
   --ring: color-mix(in oklab, var(--color-black) 15%, transparent);
+
   --sidebar: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5.3% 26.1%);
   --sidebar-primary: hsl(240 5.9% 10%);
@@ -60,6 +63,23 @@
   --sidebar-accent-foreground: hsl(240 5.9% 10%);
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+  /* vis.js theme integration */
+  --vis-color0: #000 !important;
+  --vis-color1: oklch(0.63 0.1963 157.86) !important;
+
+  --tooltip-label-color: rgba(0, 0, 0, 0.5) !important;
+  --tooltip-value-color: rgba(0, 0, 0, 1) !important;
+
+  --vis-axis-grid-color: rgba(0, 0, 0, 0.1) !important;
+  --vis-tooltip-background-color: #fff !important;
+  --vis-tooltip-border-color: none !important;
+  --vis-tooltip-text-color: rgba(0, 0, 0, 0.5) !important;
+  --vis-axis-tick-label-color: rgba(0, 0, 0, 0.5) !important;
+  --vis-legend-label-color: rgba(0, 0, 0, 0.75) !important;
+
+  --vis-axis-label-color: rgba(0, 0, 0, 0.5) !important;
+  --vis-legend-label-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .dark {
@@ -121,6 +141,22 @@
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+  --vis-color0: #fff !important;
+  --vis-color1: oklch(0.85 0.13 157.86) !important;
+
+  --tooltip-label-color: rgba(255, 255, 255, 0.7) !important;
+  --tooltip-value-color: rgba(255, 255, 255, 1) !important;
+
+  --vis-axis-grid-color: rgba(255, 255, 255, 0.15) !important;
+  --vis-tooltip-background-color: #23272f !important;
+  --vis-tooltip-border-color: none !important;
+  --vis-tooltip-text-color: rgba(255, 255, 255, 0.7) !important;
+  --vis-axis-tick-label-color: rgba(255, 255, 255, 0.7) !important;
+  --vis-legend-label-color: rgba(255, 255, 255, 0.85) !important;
+
+  --vis-axis-label-color: rgba(255, 255, 255, 0.7) !important;
+  --vis-legend-label-color: rgba(255, 255, 255, 0.7) !important;
 }
 
 @theme {

@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     '@formkit/auto-animate/nuxt',
     './app/modules/shadcn',
     'nuxt-monaco-editor',
+    'nuxt-charts',
   ],
   ssr: false,
   devtools: { enabled: false },
