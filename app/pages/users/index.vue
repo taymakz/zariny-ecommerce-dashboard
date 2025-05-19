@@ -28,7 +28,7 @@ const {
   isLoading,
   firstInitLoading,
   refresh,
-} = usePaginatedData<UsersType>('admin/users', filters, 10, {
+} = usePaginatedData<UsersType>('admin/users', filters, 24, {
   scrollContainer: document.getElementById('main'),
   autoLoadOnMount: true,
 })

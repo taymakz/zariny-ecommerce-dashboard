@@ -1,15 +1,17 @@
 import type { AuthenticateTokensType } from '~/types/authenticate'
 import { defineStore } from 'pinia'
 import { toast } from 'vue-sonner'
-import { UserLogout } from '~/services/user'
+import { UserGetRole, UserLogout } from '~/services/user'
 import {
   isAuthenticateAccessTokenExpired,
 } from '~/utils/authenticate'
 import { createSimpleMemoizeExpiringCache } from '~/utils/cache'
+import type { UserRoleType } from '~/types/user'
 
 export const useAuthenticateStore = defineStore('authenticate', () => {
   // State
   const userTokens = ref<AuthenticateTokensType | null>(null)
+  const userRole = shallowRef<UserRoleType>(undefined)
   const userEmail = ref<string | null>(null)
   const loading = ref<boolean>(false)
   const initLoading = ref<boolean>(true)
@@ -20,6 +22,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
   const getLoading = computed((): boolean => loading.value)
   const getInitLoading = computed((): boolean => initLoading.value)
   const getUserEmail = computed(() => userEmail.value)
+  const getUserRole = computed(() => userRole.value)
   // Actions - Setters
   const SetLoading = (value?: boolean) => {
     if (value)
@@ -55,6 +58,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
   const Login = async (email: string) => {
     const route = useRoute()
     UpdateUserEmail(email)
+    await SetRole()
     const backUrl: any = route.query.backUrl || '/'
     return await navigateTo(backUrl)
   }
@@ -62,24 +66,27 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
     async () => {
       const email_cookie = useCookie('email')
       if (email_cookie.value) {
-        if (isAuthenticateAccessTokenExpired()) {
-          try {
-            await refreshToken()
-            UpdateUserEmail(email_cookie.value)
-          }
-          catch {
-            toast.error('Token Expired, please loggin again')
-            UpdateUserEmail(null)
-            await RedirectToLogin()
-          }
+        try {
+          await refreshToken()
+          await SetRole()
+          UpdateUserEmail(email_cookie.value)
         }
-        UpdateUserEmail(email_cookie.value)
+        catch {
+          toast.error('Token Expired, please loggin again')
+          UpdateUserEmail(null)
+          await RedirectToLogin()
+        }
       }
       initLoading.value = false
     },
     { cache: createSimpleMemoizeExpiringCache(4000) },
   )
-
+  async function SetRole() {
+    loading.value = true
+    const result = await UserGetRole()
+    userRole.value = result.data.roles[0]
+    loading.value = false
+  }
   // Return Store
   return {
     isLogin,
@@ -92,6 +99,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
     InitUser,
     Login,
     RedirectToLogin,
-
+    SetRole,
+    getUserRole
   }
 })

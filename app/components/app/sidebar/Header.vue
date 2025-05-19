@@ -23,7 +23,7 @@ import OnlineUsers from './OnlineUsers.vue'
         <i class="icon-[lucide--github] size-4" />
         Backend
       </NuxtLink>
-      <NuxtLink to="https://github.com/zariny/ecommerce" external target="_blank"
+      <NuxtLink to="https://github.com/taymakz/zariny-ecommerce-dashboard" external target="_blank"
         class="flex items-center gap-1 text-xs text-foreground-muted hover:text-foreground duration-200 uppercase font-mono">
         <i class="icon-[lucide--github] size-4" />
         Admin

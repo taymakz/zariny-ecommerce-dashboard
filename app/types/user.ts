@@ -8,3 +8,4 @@ export interface UsersType {
   is_active: boolean
   last_login: Date
 }
+export type UserRoleType = 'SUPERUSER' | 'MANAGER' | 'VIEWER' | 'ADMIN' | undefined

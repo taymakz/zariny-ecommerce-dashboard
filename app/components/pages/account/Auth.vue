@@ -88,7 +88,7 @@ async function submit() {
             <p class="text-warning text-sm">
               {{ error }}
             </p>
-            <Button :loading variant="primary" class="w-24" size="sm" :disabled="!meta.valid" @click="submit">
+            <Button :loading  class="w-24" size="sm" :disabled="!meta.valid" @click="submit">
               Login
             </Button>
           </div>

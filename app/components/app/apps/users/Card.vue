@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import type { UsersType } from '~/types/user'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+
 import Badge from '~/components/ui/badge/Badge.vue'
 import Card from '~/components/ui/card/Card.vue'
 

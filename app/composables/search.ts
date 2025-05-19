@@ -5,7 +5,7 @@ import { toast } from 'vue-sonner'
 export function usePaginatedData<T>(
   endpoint: string,
   filters: Record<string, any> = {},
-  take = 10,
+  limit = 10,
   options: {
     scrollContainer?: Ref<HTMLElement | null> | HTMLElement | null
     autoLoadOnMount?: boolean
@@ -43,7 +43,7 @@ export function usePaginatedData<T>(
       }
 
       const filteredParams: Record<string, string> = Object.fromEntries(
-        Object.entries({ ...filters, page: page.value, take: String(take) })
+        Object.entries({ ...filters, page: page.value, limit: String(limit) })
           .filter(([_, value]) => {
             if (Array.isArray(value)) return value.length > 0
             return value !== '' && value !== null && value !== undefined
@@ -97,7 +97,7 @@ export function usePaginatedData<T>(
     try {
       page.value = 1
       const filteredParams: Record<string, string> = Object.fromEntries(
-        Object.entries({ ...filters, page: page.value, take: String(take) })
+        Object.entries({ ...filters, page: page.value, limit: String(limit) })
           .filter(([_, value]) => {
             if (Array.isArray(value)) return value.length > 0
             return value !== '' && value !== null && value !== undefined
