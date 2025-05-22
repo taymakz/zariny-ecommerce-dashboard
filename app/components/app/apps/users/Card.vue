@@ -18,7 +18,7 @@ const last_login = computed(() => useTimeAgo(props.item.last_login))
       <div class="flex items-center gap-4 mb-3 ">
         <Avatar class="bg-background size-20 border-3  text-2xl z-10 relative">
           <AvatarFallback class="text-card-muted text-xs">
-            {{ item.email.slice(0, 2) }}
+            <i class="icon-[lucide--user] size-10"></i>
           </AvatarFallback>
         </Avatar>
         <div class="z-10 relative ">
