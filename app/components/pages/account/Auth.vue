@@ -41,6 +41,7 @@ async function submit() {
     form.email = ''
     form.password = ''
     await authStore.Login(result.data.email)
+    await authStore.SetRole()
   }
   else {
     error.value = result.message
@@ -88,7 +89,7 @@ async function submit() {
             <p class="text-warning text-sm">
               {{ error }}
             </p>
-            <Button :loading  class="w-24" size="sm" :disabled="!meta.valid" @click="submit">
+            <Button :loading class="w-24" size="sm" :disabled="!meta.valid" @click="submit">
               Login
             </Button>
           </div>

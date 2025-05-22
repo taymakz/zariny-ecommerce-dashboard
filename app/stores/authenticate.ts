@@ -1,4 +1,5 @@
 import type { AuthenticateTokensType } from '~/types/authenticate'
+import type { UserRoleType } from '~/types/user'
 import { defineStore } from 'pinia'
 import { toast } from 'vue-sonner'
 import { UserGetRole, UserLogout } from '~/services/user'
@@ -6,7 +7,6 @@ import {
   isAuthenticateAccessTokenExpired,
 } from '~/utils/authenticate'
 import { createSimpleMemoizeExpiringCache } from '~/utils/cache'
-import type { UserRoleType } from '~/types/user'
 
 export const useAuthenticateStore = defineStore('authenticate', () => {
   // State
@@ -58,7 +58,6 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
   const Login = async (email: string) => {
     const route = useRoute()
     UpdateUserEmail(email)
-    await SetRole()
     const backUrl: any = route.query.backUrl || '/'
     return await navigateTo(backUrl)
   }
@@ -83,8 +82,13 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
   )
   async function SetRole() {
     loading.value = true
-    const result = await UserGetRole()
-    userRole.value = result.data.roles[0]
+    try {
+      const result = await UserGetRole()
+      userRole.value = result.data.roles[0]
+    }
+    catch {
+      toast.error('Failed to get user role')
+    }
     loading.value = false
   }
   // Return Store
@@ -100,6 +104,6 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
     Login,
     RedirectToLogin,
     SetRole,
-    getUserRole
+    getUserRole,
   }
 })
