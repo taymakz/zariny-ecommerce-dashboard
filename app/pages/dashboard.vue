@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SalesOverview from '~/components/pages/dashboard/SalesOverview.vue'
 import UsersGrowth from '~/components/pages/dashboard/UsersGrowth.vue'
 
 useHead({
@@ -10,8 +11,11 @@ useHead({
   <div>
     <AppLayoutPageContent>
       <div class="grid grid-cols-1 2xl:grid-cols-2 gap-6 pt-10">
-        <div class="col-span-2">
+        <div>
           <UsersGrowth />
+        </div>
+        <div>
+          <SalesOverview />
         </div>
       </div>
     </AppLayoutPageContent>
