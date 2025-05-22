@@ -45,7 +45,7 @@ watch(idle, (isIdle) => {
   if (isIdle && websocket) {
     websocket.close()
     websocket = null
-    onlineUsers.value--
+    onlineUsers.value = Math.max(0, onlineUsers.value - 1)
   }
   else if (!isIdle && !websocket && useAuthenticateStore().isLogin) {
     connectWebSocket()
