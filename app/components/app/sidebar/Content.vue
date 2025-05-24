@@ -20,6 +20,21 @@ const links: LinkType[] = [
     icon: 'icon-[mynaui--users-group]',
     label: 'Users',
   },
+  {
+    to: '/products',
+    icon: 'icon-[mage--box]',
+    label: 'Products',
+  },
+  {
+    to: '/categories',
+    icon: 'icon-[mage--tag]',
+    label: 'Categories',
+  },
+  {
+    to: '/stockrecords',
+    icon: 'icon-[mage--archive]',
+    label: 'Stock Records',
+  },
 ]
 </script>
 
