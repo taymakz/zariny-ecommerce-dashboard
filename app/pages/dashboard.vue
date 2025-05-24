@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import ProductsCount from '~/components/pages/dashboard/ProductsCount.vue'
 import SalesOverview from '~/components/pages/dashboard/SalesOverview.vue'
 import TopCategories from '~/components/pages/dashboard/TopCategories.vue'
+import UsersCount from '~/components/pages/dashboard/UsersCount.vue'
 import UsersGrowth from '~/components/pages/dashboard/UsersGrowth.vue'
 
 useHead({
@@ -11,7 +13,14 @@ useHead({
 <template>
   <div>
     <AppLayoutPageContent>
-      <div class="grid grid-cols-1 2xl:grid-cols-2 gap-6 pt-10">
+      <div class="grid grid-cols-2 gap-6 pt-10">
+        <div class="col-span-1">
+          <UsersCount />
+        </div>
+        <div class="col-span-1">
+          <ProductsCount />
+        </div>
+
         <div class="col-span-2 2xl:col-span-1">
           <UsersGrowth />
         </div>

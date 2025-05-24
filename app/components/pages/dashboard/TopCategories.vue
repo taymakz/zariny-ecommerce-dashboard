@@ -67,12 +67,12 @@ const topCategory = computed(() => {
 
 <template>
   <div>
-    <Card class="p-6">
+    <Card class="p-6 text-sm">
       <div class="mb-4 flex justify-between border-b pb-4">
         <div>
-          <h2 class="text-xl font-medium">Top Selling Categories</h2>
+          <h2 class=" font-medium">Top Selling Categories</h2>
         </div>
-        <div class="grid grid-cols-2 gap-6 text-right">
+        <div class="grid grid-cols-2 gap-6 ">
           <div>
             <p class="mb-1 text-sm text-card-muted">Total Quantity Sold</p>
             <p class="font-medium">{{ totalQuantity }}</p>

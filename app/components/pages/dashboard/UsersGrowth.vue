@@ -162,34 +162,34 @@ const lastUpdatePrev = computed(() => {
 
 <template>
   <div>
-    <Card class="p-6">
+    <Card class="p-6 text-sm">
       <div class="mb-4 flex  justify-between border-b pb-4">
         <div>
-          <h2 class="text-xl font-medium">User Growth Monitoring</h2>
+          <h2 class=" font-medium">User Growth Monitoring</h2>
         </div>
-        <div class="grid grid-cols-3 gap-6 text-right">
+        <div class="grid grid-cols-3 gap-6  ">
           <div>
-            <p class="mb-1 text-sm text-card-muted">Total Users (Normal)</p>
+            <p class="mb-1 text-card-muted">Total Users (Normal)</p>
             <p class="font-medium">{{ totalUsers }}</p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">Growth Rate (Normal)</p>
+            <p class="mb-1 text-card-muted">Growth Rate (Normal)</p>
             <p class="font-medium">{{ growthRate }}</p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">Last Update (Normal)</p>
+            <p class="mb-1 text-card-muted">Last Update (Normal)</p>
             <p class="font-medium">{{ useTimeAgo(new Date(lastUpdate)) }}</p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">Total Users (Prev)</p>
+            <p class="mb-1 text-card-muted">Total Users (Prev)</p>
             <p class="font-medium">{{ totalUsersPrev }}</p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">Growth Rate (Prev)</p>
+            <p class="mb-1 text-card-muted">Growth Rate (Prev)</p>
             <p class="font-medium">{{ growthRatePrev }}</p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">Last Update (Prev)</p>
+            <p class="mb-1 text-card-muted">Last Update (Prev)</p>
             <p class="font-medium">{{ useTimeAgo(new Date(lastUpdatePrev)) }}</p>
           </div>
         </div>

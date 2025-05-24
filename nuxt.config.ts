@@ -98,6 +98,7 @@ export default defineNuxtConfig({
       'DM Mono': [400, 500],
       'Roboto Condensed': [400, 500],
       'Bad Script': [400, 500],
+      'Comfortaa': [400, 500, 600, 700],
 
     },
   },

@@ -72,8 +72,8 @@ onMounted(async () => {
     // Combine data, assuming both responses cover 30 days
     chartData.value = resNormal.data.map((item, index) => ({
       date: item.date,
-      total: item.total,
-      prevTotal: resPrev.data[index]?.total ?? 0,
+      total: Number(item.total) || 0,
+      prevTotal: Number(resPrev.data[index]?.total) || 0,
     }))
   }
   catch (err) {
@@ -103,7 +103,7 @@ function tooltipFormatter(context: { index: number, datasetIndex: number }): str
   const date = new Date(item.date)
   const timeAgo = useTimeAgo(date)
   const datasetLabel = context.datasetIndex === 0 ? 'Normal Period' : 'Previous Month'
-  const total = context.datasetIndex === 0 ? item.total : item.prevTotal
+  const total = context.datasetIndex === 0 ? Number(item.total) || 0 : Number(item.prevTotal) || 0
   return `${datasetLabel} (${timeAgo.value}): $${total.toLocaleString()} in sales`
 }
 
@@ -112,15 +112,15 @@ const totalSales = computed(() => {
   if (!chartData.value.length)
     return '$0'
   return `$${chartData.value
-    .reduce((sum, item) => sum + (item.total ?? 0), 0)
+    .reduce((sum, item) => sum + (Number(item.total) || 0), 0)
     .toLocaleString()}`
 })
 
 const growthRate = computed(() => {
   if (chartData.value.length < 2)
     return '0%'
-  const last = chartData.value[chartData.value.length - 1]?.total ?? 0
-  const secondLast = chartData.value[chartData.value.length - 2]?.total ?? 0
+  const last = Number(chartData.value[chartData.value.length - 1]?.total) || 0
+  const secondLast = Number(chartData.value[chartData.value.length - 2]?.total) || 0
   if (secondLast === 0)
     return '0%'
   const rate = ((last - secondLast) / secondLast) * 100
@@ -143,15 +143,15 @@ const totalSalesPrev = computed(() => {
   if (!chartData.value.length)
     return '$0'
   return `$${chartData.value
-    .reduce((sum, item) => sum + (item.prevTotal ?? 0), 0)
+    .reduce((sum, item) => sum + (Number(item.prevTotal) || 0), 0)
     .toLocaleString()}`
 })
 
 const growthRatePrev = computed(() => {
   if (chartData.value.length < 2)
     return '0%'
-  const last = chartData.value[chartData.value.length - 1]?.prevTotal ?? 0
-  const secondLast = chartData.value[chartData.value.length - 2]?.prevTotal ?? 0
+  const last = Number(chartData.value[chartData.value.length - 1]?.prevTotal) || 0
+  const secondLast = Number(chartData.value[chartData.value.length - 2]?.prevTotal) || 0
   if (secondLast === 0)
     return '0%'
   const rate = ((last - secondLast) / secondLast) * 100
@@ -173,16 +173,16 @@ const lastUpdatePrev = computed(() => {
 
 <template>
   <div>
-    <Card class="p-6">
+    <Card class="p-6 text-sm">
       <div class="mb-4 flex justify-between border-b pb-4">
         <div>
-          <h2 class="text-xl font-medium">
+          <h2 class=" font-medium">
             Sales Overview
           </h2>
         </div>
-        <div class="grid grid-cols-3 gap-6 text-right">
+        <div class="grid grid-cols-3 gap-6 ">
           <div>
-            <p class="mb-1 text-sm text-card-muted">
+            <p class="mb-1  text-card-muted">
               Total Sales (Normal)
             </p>
             <p class="font-medium">
@@ -190,7 +190,7 @@ const lastUpdatePrev = computed(() => {
             </p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">
+            <p class="mb-1  text-card-muted">
               Growth Rate (Normal)
             </p>
             <p class="font-medium">
@@ -198,7 +198,7 @@ const lastUpdatePrev = computed(() => {
             </p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">
+            <p class="mb-1  text-card-muted">
               Last Update (Normal)
             </p>
             <p class="font-medium">
@@ -206,7 +206,7 @@ const lastUpdatePrev = computed(() => {
             </p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">
+            <p class="mb-1  text-card-muted">
               Total Sales (Prev)
             </p>
             <p class="font-medium">
@@ -214,7 +214,7 @@ const lastUpdatePrev = computed(() => {
             </p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">
+            <p class="mb-1  text-card-muted">
               Growth Rate (Prev)
             </p>
             <p class="font-medium">
@@ -222,7 +222,7 @@ const lastUpdatePrev = computed(() => {
             </p>
           </div>
           <div>
-            <p class="mb-1 text-sm text-card-muted">
+            <p class="mb-1  text-card-muted">
               Last Update (Prev)
             </p>
             <p class="font-medium">
