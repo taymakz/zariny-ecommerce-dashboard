@@ -1,4 +1,23 @@
 <script setup lang="ts">
+import type { ProductType } from '~/types/product'
+import { reactive } from 'vue'
+import AppAppsProductsCard from '~/components/app/apps/products/Card.vue'
+import AppAppsProductsCardSkeleton from '~/components/app/apps/products/CardSkeleton.vue'
+import { usePaginatedData } from '~/composables/search'
+
+const filters = reactive({})
+const {
+  dataList: products,
+  isLoading,
+  hasMore,
+  error,
+  firstInitLoading,
+} = usePaginatedData<ProductType>(
+  '/admin/products?ordering=-updated_at',
+  filters,
+  16,
+  { scrollContainer: document.getElementById('main'), autoLoadOnMount: true },
+)
 </script>
 
 <template>
@@ -21,21 +40,31 @@
     </AppLayoutPageHeader>
 
     <AppLayoutPageContent>
-      <div class="flex items-center justify-center min-h-[400px]">
-        <div class="text-center space-y-4">
-          <div class="text-6xl">
-            🚧
-          </div>
-          <h2 class="text-2xl font-semibold text-muted-foreground">
-            Products Management
-          </h2>
-          <p class="text-muted-foreground">
-            This page is currently in development
-          </p>
-          <div class="text-sm text-muted-foreground">
-            Features coming soon: Product listing, inventory management, pricing controls
-          </div>
-        </div>
+      <div class="grid grid-cols-4 2xl:grid-cols-5 gap-6">
+        <template v-if="firstInitLoading">
+          <AppAppsProductsCardSkeleton v-for="i in 12" :key="i" />
+        </template>
+        <template v-else>
+          <template v-if="error">
+            <div class="text-red-500 text-center py-8">
+              {{ error }}
+            </div>
+          </template>
+          <template v-else-if="products.length === 0">
+            <div class="text-center py-8 text-muted-foreground">
+              No products found.
+            </div>
+          </template>
+          <template v-else>
+            <AppAppsProductsCard v-for="product in products" :key="product.id" :item="product" />
+            <template v-if="isLoading && products.length > 0">
+              <AppAppsProductsCardSkeleton v-for="i in 3" :key="i" />
+            </template>
+          </template>
+        </template>
+      </div>
+      <div v-if="!hasMore && products.length > 0" class="text-center text-muted-foreground py-4 text-xs">
+        No more products to load.
       </div>
     </AppLayoutPageContent>
   </div>
