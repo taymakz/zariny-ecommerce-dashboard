@@ -28,7 +28,7 @@ const isCurrentRoute = computed(() => route.path === '/account')
       <!-- <Single v-for="link in links" :key="link.to" :link /> -->
       <Avatar class="bg-background size-12 border  text-2xl z-10 relative">
         <AvatarFallback class="text-card-muted text-xs">
-          {{ email!.slice(0, 2) }}
+         <i class="icon-[lucide--user] size-6"></i>
         </AvatarFallback>
       </Avatar>
       <div class="space-y-0.5">
