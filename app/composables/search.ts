@@ -10,8 +10,8 @@ export function usePaginatedData<T>(
     scrollContainer?: Ref<HTMLElement | null> | HTMLElement | null
     autoLoadOnMount?: boolean
   } = {
-      autoLoadOnMount: true,
-    },
+    autoLoadOnMount: true,
+  },
 ) {
   const dataList = ref<T[]>([])
   const page = ref(1)
@@ -29,7 +29,8 @@ export function usePaginatedData<T>(
   )
 
   const loadData = async (reset = false) => {
-    if (isLoading.value || (!hasMore.value && !reset)) return
+    if (isLoading.value || (!hasMore.value && !reset))
+      return
 
     isLoading.value = true
     error.value = null
@@ -42,10 +43,12 @@ export function usePaginatedData<T>(
         firstInitLoading.value = false
       }
 
+      const offset = (page.value - 1) * limit
       const filteredParams: Record<string, string> = Object.fromEntries(
-        Object.entries({ ...filters, page: page.value, limit: String(limit) })
+        Object.entries({ ...filters, page: page.value, limit: String(limit), offset: String(offset) })
           .filter(([_, value]) => {
-            if (Array.isArray(value)) return value.length > 0
+            if (Array.isArray(value))
+              return value.length > 0
             return value !== '' && value !== null && value !== undefined
           })
           .map(([key, value]) => [key, String(value)]),
@@ -76,30 +79,35 @@ export function usePaginatedData<T>(
 
       // Check if there are more pages based on `next`
       hasMore.value = response.data.next !== null
-    } catch (err: any) {
+    }
+    catch (err: any) {
       const errorMessage = err.message || `Error fetching data from ${endpoint}`
       console.error(errorMessage, err)
       error.value = errorMessage
       if (import.meta.client) {
         toast.error(errorMessage)
       }
-    } finally {
+    }
+    finally {
       isLoading.value = false
     }
   }
 
   const refresh = async () => {
-    if (isLoading.value) return
+    if (isLoading.value)
+      return
 
     isLoading.value = true
     error.value = null
 
     try {
       page.value = 1
+      const offset = (page.value - 1) * limit
       const filteredParams: Record<string, string> = Object.fromEntries(
-        Object.entries({ ...filters, page: page.value, limit: String(limit) })
+        Object.entries({ ...filters, page: page.value, limit: String(limit), offset: String(offset) })
           .filter(([_, value]) => {
-            if (Array.isArray(value)) return value.length > 0
+            if (Array.isArray(value))
+              return value.length > 0
             return value !== '' && value !== null && value !== undefined
           })
           .map(([key, value]) => [key, String(value)]),
@@ -122,20 +130,23 @@ export function usePaginatedData<T>(
       entityCount.value = response.data.count
       hasMore.value = response.data.next !== null
       page.value++
-    } catch (err: any) {
+    }
+    catch (err: any) {
       const errorMessage = err.message || `Error refreshing data from ${endpoint}`
       console.error(errorMessage, err)
       error.value = errorMessage
       if (import.meta.client) {
         toast.error(errorMessage)
       }
-    } finally {
+    }
+    finally {
       isLoading.value = false
     }
   }
 
   const handleScroll = () => {
-    if (!scrollContainer.value || isLoading.value || !hasMore.value) return
+    if (!scrollContainer.value || isLoading.value || !hasMore.value)
+      return
 
     const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value
     const isCloseToBottom = scrollTop + clientHeight >= scrollHeight - 500
