@@ -24,7 +24,7 @@ const last_login = computed(() => useTimeAgo(props.item.last_login))
         <div class="z-10 relative ">
           <div class="flex gap-2 mb-1 items-center">
             <p class="text-card-muted text-xs font-sans">
-              {{ item.pk }}
+             <span class="font-bold text-sm">#</span> {{ item.pk }}
             </p>
             <Badge v-if="item.is_staff" variant="success">
               Staff
