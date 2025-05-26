@@ -21,6 +21,11 @@ const links: LinkType[] = [
     label: 'Users',
   },
   {
+    to: '/groups',
+    icon: 'icon-[mdi--shield-account-outline]',
+    label: 'Groups',
+  },
+  {
     to: '/products',
     icon: 'icon-[mage--box]',
     label: 'Products',
@@ -35,15 +40,21 @@ const links: LinkType[] = [
     icon: 'icon-[mage--archive]',
     label: 'Stock Records',
   },
+  {
+    to: '/baskets',
+    icon: 'icon-[mage--shopping-cart]',
+    label: 'Baskets',
+  },
+  {
+    to: '/orders',
+    icon: 'icon-[carbon--cics-transaction-server-zos]',
+    label: 'Orders',
+  },
 ]
 </script>
 
 <template>
   <div class="flex flex-col flex-1 gap-1 overflow-y-auto overflow-x-hidden">
-    <Link
-      v-for="link in links"
-      :key="link.to"
-      :link
-    />
+    <Link v-for="link in links" :key="link.to" :link />
   </div>
 </template>
