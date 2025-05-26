@@ -18,7 +18,7 @@ function getImage(): string {
     <div>
       <!-- image -->
       <div class="w-full h-60 2xl:h-70 bg-secondary-lighter p-4">
-        <img :src="getImage()" :alt="item.title" class="rounded-lg w-full h-full object-cover">
+        <img :src="getImage()" :alt="item.title" class="rounded-lg w-full h-full object-cover border bg-card">
       </div>
       <div class="p-4">
         <div class="flex items-center gap-2 mb-1">
