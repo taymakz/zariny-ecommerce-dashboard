@@ -16,7 +16,7 @@ const isLoading = ref(true)
 const error = ref<string | null>(null)
 
 const categories = {
-  total: { name: 'Total Quantity Sold', color: '#22c55e' },
+  total: { name: 'Total Quantity Sold' },
 }
 
 // Fetch data for top categories

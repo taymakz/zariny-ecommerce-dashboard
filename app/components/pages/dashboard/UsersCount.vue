@@ -79,8 +79,8 @@ const confirmationRate = computed(() => {
               <div>{{ confirmedUsers }} of {{ totalUsers }}</div>
             </div>
             <div class="h-2 rounded-full bg-neutral-100 dark:bg-white/5">
-              <div class="h-full rounded-full duration-500"
-                :style="`width: ${confirmationProgress}%; background-color: rgb(34, 197, 94);`" />
+              <div class="h-full rounded-full duration-500 bg-[#22c55e]"
+                :style="`width: ${confirmationProgress}%;`" />
             </div>
           </div>
         </div>

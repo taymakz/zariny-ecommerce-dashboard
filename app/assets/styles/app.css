@@ -65,8 +65,8 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
   /* vis.js theme integration */
-  --vis-color0: #000 !important;
-  --vis-color1: oklch(0.63 0.1963 157.86) !important;
+  --vis-color0: var(--color-violet-600) !important;
+  --vis-color1: var(--color-sky-600) !important;
 
   --tooltip-label-color: rgba(0, 0, 0, 0.5) !important;
   --tooltip-value-color: rgba(0, 0, 0, 1) !important;
@@ -142,8 +142,8 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
-  --vis-color0: #fff !important;
-  --vis-color1: oklch(0.85 0.13 157.86) !important;
+  --vis-color0: #22c55e !important;
+  --vis-color1: #22c55e !important;
 
   --tooltip-label-color: rgba(255, 255, 255, 0.7) !important;
   --tooltip-value-color: rgba(255, 255, 255, 1) !important;

@@ -79,8 +79,7 @@ const stockRate = computed(() => {
               <div>{{ inStockProducts }} of {{ totalProducts }}</div>
             </div>
             <div class="h-2 rounded-full bg-neutral-100 dark:bg-white/5">
-              <div class="h-full rounded-full duration-500"
-                :style="`width: ${stockProgress}%; background-color: rgb(34, 197, 94);`" />
+              <div class="h-full rounded-full duration-500 bg-[#22c55e]" :style="`width: ${stockProgress}%; `" />
             </div>
           </div>
         </div>

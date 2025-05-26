@@ -116,13 +116,16 @@ function tooltipFormatter(context: { index: number, datasetIndex: number }): str
           User Growth
         </h2>
 
-        <div v-if="isLoading" class="mt-4 border-t border-neutral-800 py-4">
+        <div v-if="isLoading" class="mt-4 border-t
+         border-neutral-800 py-4">
           <Skeleton class="w-full h-[220px]" />
         </div>
-        <div v-else-if="error" class="mt-4 border-t border-neutral-800 py-4 text-red-500 text-center">
+        <div v-else-if="error" class="mt-4 border-t
+         border-neutral-800 py-4 text-red-500 text-center">
           {{ error }}
         </div>
-        <div v-else class="mt-4 border-t border-neutral-800 py-4">
+        <div v-else class="mt-4 border-t
+         border-neutral-800 py-4">
           <AreaChart :data="chartData" :height="220" :categories="categories" :y-axis="['count', 'prevCount']"
             :y-num-ticks="4" :y-grid-line="true" :curve-type="CurveType.Linear" :legend-position="LegendPosition.Top"
             :x-formatter="xFormatter" :y-formatter="yFormatter" :tooltip-formatter="tooltipFormatter" />
