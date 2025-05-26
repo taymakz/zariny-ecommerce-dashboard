@@ -46,7 +46,7 @@ onMounted(async () => {
       </h2>
 
       <div v-if="isLoading" class="mt-4 border-y border-neutral-800 py-4">
-        <Skeleton class="w-full h-[300px]" />
+        <Skeleton class="w-full h-[316px]" />
       </div>
       <div v-else-if="error" class="mt-4 border-y border-neutral-800 py-4 text-red-500 text-center">
         {{ error }}

@@ -118,7 +118,7 @@ function tooltipFormatter(context: { index: number, datasetIndex: number }): str
 
         <div v-if="isLoading" class="mt-4 border-t
          border-neutral-800 py-4">
-          <Skeleton class="w-full h-[220px]" />
+          <Skeleton class="w-full h-[276px]" />
         </div>
         <div v-else-if="error" class="mt-4 border-t
          border-neutral-800 py-4 text-red-500 text-center">

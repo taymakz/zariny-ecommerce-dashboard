@@ -62,7 +62,7 @@ const confirmationRate = computed(() => {
         </h2>
 
         <div v-if="isLoading" class="mt-4 border-t border-neutral-800 py-4">
-          <Skeleton class="w-full h-[108px]" />
+          <Skeleton class="w-full h-[88px]" />
         </div>
         <div v-else-if="error" class="mt-4 border-t border-neutral-800 py-4 text-red-500 text-center">
           {{ error }}
