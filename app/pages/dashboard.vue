@@ -13,23 +13,23 @@ useHead({
 <template>
   <div>
     <AppLayoutPageContent>
-      <div class="grid grid-cols-2 gap-6 pt-10">
-        <div class="col-span-1">
-          <UsersCount />
-        </div>
-        <div class="col-span-1">
-          <ProductsCount />
-        </div>
-
+      <div class="grid grid-cols-2 gap-6 pt-6">
         <div class="col-span-2 2xl:col-span-1">
           <UsersGrowth />
         </div>
         <div class="col-span-2 2xl:col-span-1">
           <SalesOverview />
         </div>
-        <div class="col-span-2">
+        <div class="col-span-2 2xl:col-span-1">
           <TopCategories />
         </div>
+        <div class="col-span-2 2xl:col-span-1">
+          <div class="space-y-4">
+            <UsersCount />
+            <ProductsCount />
+          </div>
+        </div>
+
       </div>
     </AppLayoutPageContent>
   </div>

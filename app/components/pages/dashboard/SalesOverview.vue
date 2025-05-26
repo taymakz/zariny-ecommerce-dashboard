@@ -106,141 +106,28 @@ function tooltipFormatter(context: { index: number, datasetIndex: number }): str
   const total = context.datasetIndex === 0 ? Number(item.total) || 0 : Number(item.prevTotal) || 0
   return `${datasetLabel} (${timeAgo.value}): $${total.toLocaleString()} in sales`
 }
-
-// Header metrics for normal period
-const totalSales = computed(() => {
-  if (!chartData.value.length)
-    return '$0'
-  return `$${chartData.value
-    .reduce((sum, item) => sum + (Number(item.total) || 0), 0)
-    .toLocaleString()}`
-})
-
-const growthRate = computed(() => {
-  if (chartData.value.length < 2)
-    return '0%'
-  const last = Number(chartData.value[chartData.value.length - 1]?.total) || 0
-  const secondLast = Number(chartData.value[chartData.value.length - 2]?.total) || 0
-  if (secondLast === 0)
-    return '0%'
-  const rate = ((last - secondLast) / secondLast) * 100
-  return `${rate.toFixed(1)}%`
-})
-
-const lastUpdate = computed(() => {
-  if (!chartData.value.length)
-    return 'N/A'
-  const lastDate = new Date(chartData.value[chartData.value.length - 1]?.date ?? '')
-  return lastDate.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
-})
-
-// Header metrics for previous month
-const totalSalesPrev = computed(() => {
-  if (!chartData.value.length)
-    return '$0'
-  return `$${chartData.value
-    .reduce((sum, item) => sum + (Number(item.prevTotal) || 0), 0)
-    .toLocaleString()}`
-})
-
-const growthRatePrev = computed(() => {
-  if (chartData.value.length < 2)
-    return '0%'
-  const last = Number(chartData.value[chartData.value.length - 1]?.prevTotal) || 0
-  const secondLast = Number(chartData.value[chartData.value.length - 2]?.prevTotal) || 0
-  if (secondLast === 0)
-    return '0%'
-  const rate = ((last - secondLast) / secondLast) * 100
-  return `${rate.toFixed(1)}%`
-})
-
-const lastUpdatePrev = computed(() => {
-  if (!chartData.value.length)
-    return 'N/A'
-  const lastDate = new Date(chartData.value[chartData.value.length - 1]?.date ?? '')
-  lastDate.setDate(lastDate.getDate() - 30) // Adjust for previous month
-  return lastDate.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
-})
 </script>
 
 <template>
   <div>
-    <Card class="p-6 text-sm">
-      <div class="mb-4 flex justify-between border-b pb-4">
-        <div>
-          <h2 class=" font-medium">
-            Sales Overview
-          </h2>
-        </div>
-        <div class="grid grid-cols-3 gap-6 ">
-          <div>
-            <p class="mb-1  text-card-muted">
-              Total Sales (Normal)
-            </p>
-            <p class="font-medium">
-              {{ totalSales }}
-            </p>
-          </div>
-          <div>
-            <p class="mb-1  text-card-muted">
-              Growth Rate (Normal)
-            </p>
-            <p class="font-medium">
-              {{ growthRate }}
-            </p>
-          </div>
-          <div>
-            <p class="mb-1  text-card-muted">
-              Last Update (Normal)
-            </p>
-            <p class="font-medium">
-              {{ useTimeAgo(new Date(lastUpdate)) }}
-            </p>
-          </div>
-          <div>
-            <p class="mb-1  text-card-muted">
-              Total Sales (Prev)
-            </p>
-            <p class="font-medium">
-              {{ totalSalesPrev }}
-            </p>
-          </div>
-          <div>
-            <p class="mb-1  text-card-muted">
-              Growth Rate (Prev)
-            </p>
-            <p class="font-medium">
-              {{ growthRatePrev }}
-            </p>
-          </div>
-          <div>
-            <p class="mb-1  text-card-muted">
-              Last Update (Prev)
-            </p>
-            <p class="font-medium">
-              {{ useTimeAgo(new Date(lastUpdatePrev)) }}
-            </p>
-          </div>
-        </div>
-      </div>
+    <Card class="p-6">
+      <div>
+        <h2 class="text-card-muted font-semibold">
+          Sales Overview
+        </h2>
 
-      <div v-if="isLoading" class="w-full h-[220px]">
-        <Skeleton class="w-full h-full" />
+        <div v-if="isLoading" class="mt-4 border-t border-neutral-800 py-4">
+          <Skeleton class="w-full h-[220px]" />
+        </div>
+        <div v-else-if="error" class="mt-4 border-t border-neutral-800 py-4 text-red-500 text-center">
+          {{ error }}
+        </div>
+        <div v-else class="mt-4 border-t border-neutral-800 py-4">
+          <AreaChart :data="chartData" :height="220" :categories="categories" :y-axis="['total', 'prevTotal']"
+            :y-num-ticks="4" :y-grid-line="true" :curve-type="CurveType.Linear" :legend-position="LegendPosition.Top"
+            :x-formatter="xFormatter" :y-formatter="yFormatter" :tooltip-formatter="tooltipFormatter" />
+        </div>
       </div>
-      <div v-else-if="error" class="text-red-500 text-center p-4">
-        {{ error }}
-      </div>
-      <AreaChart v-else :data="chartData" :height="220" :categories="categories" :y-axis="['total', 'prevTotal']"
-        :y-num-ticks="4" :y-grid-line="true" :curve-type="CurveType.Linear" :legend-position="LegendPosition.Top"
-        :x-formatter="xFormatter" :y-formatter="yFormatter" :tooltip-formatter="tooltipFormatter" />
     </Card>
   </div>
 </template>

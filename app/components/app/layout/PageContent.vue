@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="overflow-hidden px-10 pb-8">
+  <div class="overflow-hidden px-10 pb-4">
     <slot />
   </div>
 </template>
