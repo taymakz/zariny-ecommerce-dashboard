@@ -4,6 +4,9 @@
   --color-primary: var(--color-violet-700);
   --color-primary-lighter: var(--color-violet-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-violet {
@@ -12,6 +15,9 @@
   --color-primary: var(--color-violet-700);
   --color-primary-lighter: var(--color-violet-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-sky {
@@ -20,6 +26,9 @@
   --color-primary: var(--color-sky-700);
   --color-primary-lighter: var(--color-sky-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-sky {
@@ -28,6 +37,9 @@
   --color-primary: var(--color-sky-700);
   --color-primary-lighter: var(--color-sky-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-emerald {
@@ -36,6 +48,9 @@
   --color-primary: var(--color-emerald-700);
   --color-primary-lighter: var(--color-emerald-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-emerald {
@@ -44,6 +59,9 @@
   --color-primary: var(--color-emerald-700);
   --color-primary-lighter: var(--color-emerald-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-orange {
@@ -52,6 +70,9 @@
   --color-primary: var(--color-orange-700);
   --color-primary-lighter: var(--color-orange-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-orange {
@@ -60,6 +81,9 @@
   --color-primary: var(--color-orange-700);
   --color-primary-lighter: var(--color-orange-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-red {
@@ -68,6 +92,9 @@
   --color-primary: var(--color-red-700);
   --color-primary-lighter: var(--color-red-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-red {
@@ -76,6 +103,9 @@
   --color-primary: var(--color-red-700);
   --color-primary-lighter: var(--color-red-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-yellow {
@@ -84,6 +114,9 @@
   --color-primary: var(--color-yellow-700);
   --color-primary-lighter: var(--color-yellow-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-yellow {
@@ -92,6 +125,9 @@
   --color-primary: var(--color-yellow-700);
   --color-primary-lighter: var(--color-yellow-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-fuchsia {
@@ -100,6 +136,9 @@
   --color-primary: var(--color-fuchsia-700);
   --color-primary-lighter: var(--color-fuchsia-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-fuchsia {
@@ -108,6 +147,9 @@
   --color-primary: var(--color-fuchsia-700);
   --color-primary-lighter: var(--color-fuchsia-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-pink {
@@ -116,6 +158,9 @@
   --color-primary: var(--color-pink-700);
   --color-primary-lighter: var(--color-pink-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-pink {
@@ -124,6 +169,9 @@
   --color-primary: var(--color-pink-700);
   --color-primary-lighter: var(--color-pink-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-cyan {
@@ -132,6 +180,9 @@
   --color-primary: var(--color-cyan-700);
   --color-primary-lighter: var(--color-cyan-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-cyan {
@@ -140,6 +191,9 @@
   --color-primary: var(--color-cyan-700);
   --color-primary-lighter: var(--color-cyan-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-indigo {
@@ -148,6 +202,9 @@
   --color-primary: var(--color-indigo-700);
   --color-primary-lighter: var(--color-indigo-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-indigo {
@@ -156,6 +213,9 @@
   --color-primary: var(--color-indigo-700);
   --color-primary-lighter: var(--color-indigo-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-lime {
@@ -164,6 +224,9 @@
   --color-primary: var(--color-lime-700);
   --color-primary-lighter: var(--color-lime-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-lime {
@@ -172,6 +235,9 @@
   --color-primary: var(--color-lime-700);
   --color-primary-lighter: var(--color-lime-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .theme-amber {
@@ -180,6 +246,9 @@
   --color-primary: var(--color-amber-700);
   --color-primary-lighter: var(--color-amber-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-amber {
@@ -188,13 +257,20 @@
   --color-primary: var(--color-amber-700);
   --color-primary-lighter: var(--color-amber-600);
   --color-primary-foreground: var(--color-white);
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
+
 .theme-emerald-hard {
   --color-brand: #047857;
   --color-brand-lighter: #059669;
   --color-primary: #064e3b;
   --color-primary-lighter: #059669;
   --color-primary-foreground: #ffffff;
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }
 
 .dark .theme-emerald-hard {
@@ -203,4 +279,7 @@
   --color-primary: #064e3b;
   --color-primary-lighter: #065f46;
   --color-primary-foreground: #ffffff;
+
+  --vis-color0: var(--color-brand);
+  --vis-color1: var(--color-brand);
 }

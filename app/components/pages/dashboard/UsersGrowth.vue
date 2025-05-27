@@ -49,11 +49,12 @@ function formatDisplayDate(date: Date): string {
 const categories = computed<Record<string, BulletLegendItemInterface>>(() => ({
   count: {
     name: `Normal Period (${formatDisplayDate(normalStart)} - ${formatDisplayDate(normalEnd)})`,
-    color: '#22c55e',
+    color: 'var(--color-brand)',
+
   },
   prevCount: {
     name: `Previous Month (${formatDisplayDate(prevStart)} - ${formatDisplayDate(prevEnd)})`,
-    color: '#3b82f6',
+    color: 'var(--color-card-muted)',
   },
 }))
 

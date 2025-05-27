@@ -51,6 +51,19 @@ const confirmationRate = computed(() => {
     return '0%'
   return `${confirmationProgress.value.toFixed(0)}%`
 })
+
+const progressBarColor = computed(() => {
+  const progress = confirmationProgress.value
+  if (progress >= 0 && progress < 20)
+    return 'bg-warning'
+  if (progress >= 20 && progress < 40)
+    return 'bg-alert'
+  if (progress >= 40 && progress < 60)
+    return 'bg-info'
+  if (progress >= 60)
+    return 'bg-success'
+  return 'bg-brand' // fallback
+})
 </script>
 
 <template>
@@ -79,7 +92,7 @@ const confirmationRate = computed(() => {
               <div>{{ confirmedUsers }} of {{ totalUsers }}</div>
             </div>
             <div class="h-2 rounded-full bg-neutral-100 dark:bg-white/5">
-              <div class="h-full rounded-full duration-500 bg-[#22c55e]"
+              <div class="h-full rounded-full duration-500" :class="progressBarColor"
                 :style="`width: ${confirmationProgress}%;`" />
             </div>
           </div>

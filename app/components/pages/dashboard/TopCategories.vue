@@ -54,7 +54,7 @@ onMounted(async () => {
       <div v-else class="mt-4 border-y border-neutral-800 py-4">
         <BarChart :data="chartData" :height="260" x-axis="name" :y-axis="['total']" :radius="10"
           :y-formatter="(i) => chartData[i].name" :categories="categories" :legend-position="LegendPosition.Top"
-          :orientation="Orientation.Horizontal" />
+          :orientation="Orientation.Horizontal"  />
       </div>
     </div>
   </Card>
