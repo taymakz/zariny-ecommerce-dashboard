@@ -49,12 +49,12 @@ function formatDisplayDate(date: Date): string {
 const categories = computed<Record<string, BulletLegendItemInterface>>(() => ({
   count: {
     name: `Normal Period (${formatDisplayDate(normalStart)} - ${formatDisplayDate(normalEnd)})`,
-    color: 'var(--color-brand)',
+    color: '#22c55e',
 
   },
   prevCount: {
     name: `Previous Month (${formatDisplayDate(prevStart)} - ${formatDisplayDate(prevEnd)})`,
-    color: 'var(--color-card-muted)',
+    color: '#525252',
   },
 }))
 
@@ -128,7 +128,7 @@ function tooltipFormatter(context: { index: number, datasetIndex: number }): str
         <div v-else class="mt-4 border-t
          border-neutral-800 py-4">
           <AreaChart :data="chartData" :height="220" :categories="categories" :y-axis="['count', 'prevCount']"
-            :y-num-ticks="4" :y-grid-line="true" :curve-type="CurveType.Linear" :legend-position="LegendPosition.Top"
+            :y-num-ticks="4" :y-grid-line="true" :curve-type="CurveType.Basis" :legend-position="LegendPosition.Top"
             :x-formatter="xFormatter" :y-formatter="yFormatter" :tooltip-formatter="tooltipFormatter" />
         </div>
       </div>
